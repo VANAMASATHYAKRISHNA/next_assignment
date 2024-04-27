@@ -37,8 +37,11 @@ error:string
 const Population:React.FC<IProps> =({nationPopulationList,error})=>{
     return(
     <React.Fragment>
-        <LoadingAnimation/>
+    <LoadingAnimation/>
+    <div>
     <PopulationList nationPopulationList={nationPopulationList}/>
+    </div>
+    
     </React.Fragment>)
 
 }
