@@ -19,7 +19,7 @@
   .table-container {
     overflow-y: auto;
     max-height: 400px; 
-    overflow-x: hidden;
+    overflow-x: auto;
   }
   
   .table-body {
