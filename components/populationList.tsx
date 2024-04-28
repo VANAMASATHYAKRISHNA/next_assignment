@@ -152,8 +152,9 @@ return(
                 }}
               />
             </SearchAreaContainer>
+       <div className="table-container mt-[8px]">
       <Table sx={{ minWidth: 700 }} aria-label="customized table" className="border border-grey-400 p-2 mt-4 ml-[6px] mb-4">
-        <TableHead>
+        <TableHead className="sticky top-0 bg-[#191970]">
           <TableRow>
             <StyledTableCell onClick={()=>{
           if(sortType === 'population')
@@ -199,7 +200,7 @@ return(
             <StyledTableCell >Id Nation On</StyledTableCell>
           </TableRow>
         </TableHead>
-        <TableBody>
+        <TableBody className="table-body">
             {
              searchTableData.length > 0 && searchTableData.map((nationPopulationData:INationPopulation)=>{
                     return(
@@ -221,6 +222,7 @@ return(
          
         </TableBody>
       </Table>
+      </div>
       </div>
     </TableContainer>
 </React.Fragment>)

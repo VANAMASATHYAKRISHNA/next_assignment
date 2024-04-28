@@ -16,4 +16,13 @@
   .text-zoom {
     animation: zoomIn 0.5s ease-in-out;
   }
+  .table-container {
+    overflow-y: auto;
+    max-height: 400px; 
+    overflow-x: hidden;
+  }
+  
+  .table-body {
+    overflow-y: auto;
+  }
   
