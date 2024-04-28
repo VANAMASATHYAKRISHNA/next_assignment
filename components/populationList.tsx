@@ -201,24 +201,26 @@ return(
           </TableRow>
         </TableHead>
         <TableBody className="table-body">
-            {
-             searchTableData.length > 0 && searchTableData.map((nationPopulationData:INationPopulation)=>{
-                    return(
-                        <StyledTableRow key={nationPopulationData.Year}>
-                        <StyledTableCell component="th" scope="row">
-                        {nationPopulationData.Year}
-                       </StyledTableCell>
-                     <StyledTableCell>
-                     {nationPopulationData.Population}
-                      </StyledTableCell>
-                     <StyledTableCell>{nationPopulationData.Nation}</StyledTableCell>
-                     <StyledTableCell>{nationPopulationData["ID Year"]}</StyledTableCell>
-                     <StyledTableCell>{nationPopulationData["Slug Nation"]}</StyledTableCell>
-                     <StyledTableCell>{nationPopulationData["ID Nation"]}</StyledTableCell>
-                   </StyledTableRow>
-                    )
-                })
-            }
+        {searchTableData.length > 0 ? (
+          searchTableData.map((nationPopulationData) => (
+            <TableRow key={nationPopulationData.Year}>
+              <TableCell component="th" scope="row">
+                {nationPopulationData.Year}
+              </TableCell>
+              <TableCell>{nationPopulationData.Population}</TableCell>
+              <TableCell>{nationPopulationData.Nation}</TableCell>
+              <TableCell>{nationPopulationData["ID Year"]}</TableCell>
+              <TableCell>{nationPopulationData["Slug Nation"]}</TableCell>
+              <TableCell>{nationPopulationData["ID Nation"]}</TableCell>
+            </TableRow>
+          ))
+        ) : (
+          <TableRow>
+            <TableCell colSpan={6} align="center">
+              No data available
+            </TableCell>
+          </TableRow>
+        )}
          
         </TableBody>
       </Table>
