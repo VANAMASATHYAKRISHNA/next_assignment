@@ -1,5 +1,5 @@
 import { INationPopulation } from "@/models/nationPopulation"
-import React from "react"
+import React, { useEffect, useState } from "react"
 import { styled } from '@mui/material/styles';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -8,16 +8,24 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import { SortDescIcon } from "./SortDescIcon";
+import { NoSortIcon } from "./NoSortIcon";
+import { SortAscIcon } from "./SortAscIcon";
+
 interface IProps{
     nationPopulationList:INationPopulation[]
 }
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
-      backgroundColor: theme.palette.common.black,
-      color: theme.palette.common.white,
+      backgroundColor: theme.palette.common.white,
+      color: theme.palette.common.black,
+      fontWeight: 'bold',
+      fontSize: 16,
+      font:'Open Sans' 
     },
     [`&.${tableCellClasses.body}`]: {
       fontSize: 14,
+      font:'Open Sans'
     },
   }));
   
@@ -31,35 +39,111 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
     },
   }));
 const PopulationList:React.FC<IProps> = ({nationPopulationList}) =>{
+  const [sortType,setSortType] = useState('population') //population,year
+  const [sortYearOrder,setYearOrder] = useState(true)
+  const [sortPopulationOrder,setPopulationOrder] = useState(true)
+  const [searchTableData, setSearchTableData] = useState<INationPopulation[]>([]);
+  useEffect(()=>{
+setSearchTableData(nationPopulationList)
+  },[nationPopulationList])
+
+  const sortByYear =() => {
+    if (searchTableData.length === 0) {
+      return; 
+    }
+    setSearchTableData((tableData:INationPopulation[]) => {
+    const sortedData = [...tableData].sort((a, b) => {
+      return sortYearOrder
+      ? (parseInt(a.Year) - parseInt(b.Year))
+      :(parseInt(b.Year) - parseInt(a.Year)); 
+    })
+    return sortedData;
+    });
+    setYearOrder(!sortYearOrder)
+   
+  }
+  const sortByPopulation =() => {
+    if (searchTableData.length === 0) {
+      return; 
+    }
+    setSearchTableData((tableData:INationPopulation[]) => {
+    const sortedData = [...tableData].sort((a, b) => {
+      return sortPopulationOrder
+      ? (a.Population - b.Population)
+      :(b.Population - a.Population); 
+    })
+    return sortedData;
+    });
+    setPopulationOrder(!sortPopulationOrder)
+   
+  }
 return(
 <React.Fragment>
-<TableContainer component={Paper}>
-      <Table sx={{ minWidth: 700 }} aria-label="customized table">
+<TableContainer component={Paper} >
+<div className="border border-grey-400 p-2 mt-4 ml-9 mr-9 pr-5 mb-4">
+      <h1 className="text-center font-bold text-lg">Annual Population Statistics</h1>
+      <Table sx={{ minWidth: 700 }} aria-label="customized table" className="border border-grey-400 p-2 mt-4 ml-[6px] mb-4">
         <TableHead>
           <TableRow>
-            <StyledTableCell>Id Nation</StyledTableCell>
-            <StyledTableCell align="right">Id Year</StyledTableCell>
-            <StyledTableCell align="right">Nation</StyledTableCell>
-            <StyledTableCell align="right">Population</StyledTableCell>
-            <StyledTableCell align="right">Slug Nation</StyledTableCell>
-            <StyledTableCell align="right">Year</StyledTableCell>
+            <StyledTableCell onClick={()=>{
+          if(sortType === 'population')
+            {
+              setSortType('year')
+              setYearOrder(true)
+            }
+              sortByYear()
+          }}> <div  className="flex items-center">
+            <p>Year</p>
+            <div className="ml-[4px]">
+              {sortType === 'year'?<div>
+              {
+              sortYearOrder ? <SortAscIcon/> : <SortDescIcon />
+              }
+              </div> :<NoSortIcon/>}
+            
+            </div>
+          </div> </StyledTableCell>
+          <StyledTableCell onClick={()=>{
+          if(sortType === 'year')
+            {
+              setSortType('population')
+              setPopulationOrder(true)
+            }
+              sortByPopulation()
+          }} >
+            <div  className="flex items-center">
+            <p> Population </p>
+            <div className="ml-[4px]">
+              {sortType === 'population' ? <div>
+              {
+              sortPopulationOrder ? <SortAscIcon/> : <SortDescIcon />
+              }
+              </div> :<NoSortIcon/>}
+            
+            </div>
+          </div>
+          </StyledTableCell>
+          <StyledTableCell >Nation</StyledTableCell>
+            <StyledTableCell >Id Year</StyledTableCell>
+            <StyledTableCell >Slug Nation</StyledTableCell>
+            <StyledTableCell >Id Nation On</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
             {
-                nationPopulationList.map((nationPopulationData:INationPopulation)=>{
+             searchTableData.length > 0 && searchTableData.map((nationPopulationData:INationPopulation)=>{
                     return(
-                        <StyledTableRow key={nationPopulationData["ID Nation"]}>
+                        <StyledTableRow key={nationPopulationData.Year}>
                         <StyledTableCell component="th" scope="row">
-                       {nationPopulationData["ID Nation"]}
-                     </StyledTableCell>
-                     <StyledTableCell  align="right">
-                       {nationPopulationData["ID Year"]}
-                     </StyledTableCell>
-                     <StyledTableCell align="right">{nationPopulationData.Nation}</StyledTableCell>
-                     <StyledTableCell align="right">{nationPopulationData.Population}</StyledTableCell>
-                     <StyledTableCell align="right">{nationPopulationData["Slug Nation"]}</StyledTableCell>
-                     <StyledTableCell align="right">{nationPopulationData.Year}</StyledTableCell>
+                        {nationPopulationData.Year}
+                       </StyledTableCell>
+                     <StyledTableCell>
+                     {nationPopulationData.Population}
+                      </StyledTableCell>
+                     <StyledTableCell>{nationPopulationData.Nation}</StyledTableCell>
+                     <StyledTableCell>{nationPopulationData["ID Year"]}</StyledTableCell>
+                     <StyledTableCell>{nationPopulationData["Slug Nation"]}</StyledTableCell>
+                     <StyledTableCell>{nationPopulationData["ID Nation"]}</StyledTableCell>
                    </StyledTableRow>
                     )
                 })
@@ -67,6 +151,7 @@ return(
          
         </TableBody>
       </Table>
+      </div>
     </TableContainer>
 </React.Fragment>)
 }

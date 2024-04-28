@@ -45,24 +45,30 @@ const LoadingAnimation = () => {
   return (
     <div
       ref={mainRef}
-      className="relative h-screen flex justify-center items-center bg-cover"
+      className="relative h-screen flex justify-center items-center bg-cover font-sans"
       style={{
         backgroundImage: 'url(https://plus.unsplash.com/premium_photo-1682001801592-7be1661d6ef7?q=80&w=1935&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D)',
       }}
     >
       <div className="absolute text-center text-black">
-        <h1 className="text-7xl font-bold text-zoom text-orange-300  mb-8">
+        <h1 className="text-7xl font-bold text-zoom text-orange-300  mb-8 ">
           Welcome to this website
         </h1>
         <p
-          className="mt-4 text-lg bg-gray-200 border border-black w-1/4 mx-auto p-4"
-          ref={textRef}
+        className="text-lg bg-gray-200 border border-black sm:w-2/4 w-full mx-auto p-4 sm:p-2"
+        ref={textRef}
         >
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus repellat
-          voluptatum consequuntur ad. Atque officiis, fuga explicabo ducimus ea illo
-          quibusdam obcaecati tenetur repudiandae molestiae. Repudiandae fugiat error
-          quisquam labore.
-        </p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus repellat
+        voluptatum consequuntur ad. Atque officiis, fuga explicabo ducimus ea illo
+        quibusdam obcaecati tenetur repudiandae molestiae. Repudiandae fugiat error
+        quisquam labore.
+      </p>
+        <h2 className="mt-12  bg-gray-200 border border-black w-fit px-2 mx-auto text-lg animate-bounce font-semibold">
+          Explore Annual Population Statistics Below 
+          <svg className="animate-bounce w-6 h-6 text-gray-900 ml-[40%] mt-1" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
+          <path d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+        </svg>
+        </h2>
       </div>
     </div>
   );
