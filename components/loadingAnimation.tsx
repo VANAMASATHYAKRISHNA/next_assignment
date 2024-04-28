@@ -41,6 +41,14 @@ const LoadingAnimation = () => {
       }
     );
   }, { scope: container });
+  const scrollToBottom = useRef<HTMLHeadingElement>(null);
+
+  const handleClick = () => {
+    window.scrollTo({
+      top: document.body.scrollHeight,
+      behavior: 'smooth',
+    });
+  };
 
   return (
     <div
@@ -63,8 +71,8 @@ const LoadingAnimation = () => {
         quibusdam obcaecati tenetur repudiandae molestiae. Repudiandae fugiat error
         quisquam labore.
       </p>
-        <h2 className="mt-12  bg-gray-100 border border-black text-[#8697c4] w-fit px-2 mx-auto text-lg animate-bounce font-semibold">
-          Explore Annual Population Statistics Below 
+        <h2 ref={scrollToBottom} className="mt-12  bg-gray-100 border border-black text-[#8697c4] w-fit px-2 mx-auto text-lg animate-bounce font-semibold" onClick={handleClick}>
+          Explore Annual Population Statistics Below
           <svg className="animate-bounce w-6 h-6 ml-[40%] mt-1" fill="#8697c4" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
           <path d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
         </svg>
