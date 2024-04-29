@@ -6,15 +6,13 @@ import { AxiosResponse } from "axios";
 import { GetStaticProps } from "next";
 import React from "react";
 
-interface DataResponse {
-    // Define the structure of the response data
-    // Example: Assuming the response data has a property called 'data'
-    data: any;
-}
+interface PopulationData {
+    data: INationPopulation[];
+  }
 
 export const getStaticProps: GetStaticProps = async () => {
     try {
-        const response: AxiosResponse<DataResponse> = await getNationPopulation();
+        const response: AxiosResponse<PopulationData> = await getNationPopulation();
         const nationPopulationList = response.data;
         return {
             props: {
