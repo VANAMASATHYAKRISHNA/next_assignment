@@ -31,20 +31,6 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
       font:'Open Sans'
     },
   }));
-  
-  const StyledTableRow = styled(TableRow)(({ theme }) => ({
-    '&:nth-of-type(odd)': {
-      backgroundColor: theme.palette.action.hover,
-    },
-    '&:last-child td, &:last-child th': {
-      border: 0,
-    },
-  }));
-  export const SearchAreaContainer = styled("div")((props: any) => ({
-    gap: "10px",
-    height: "24px",
-    marginRight: props.marginRight ? "22px" : "",
-  })) as any;
   export const CustomSearchField = styled(TextField)({
     width: "30%",
     marginTop:"4px",
@@ -63,16 +49,11 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
       background: "#FFF",
     },
   });
-  export const CloseIcon = styled(Image)({
-    cursor: "pointer",
-    width: "12px",
-    height: "12px",
-  });
 const PopulationList:React.FC<IProps> = ({nationPopulationList}) =>{
-  const [searchTerm, setSearchTerm] = useState("");
-  const [sortType,setSortType] = useState('population') //population,year
-  const [sortYearOrder,setYearOrder] = useState(true)
-  const [sortPopulationOrder,setPopulationOrder] = useState(true)
+  const [searchTerm, setSearchTerm] = useState<string>('');
+  const [sortType,setSortType] = useState<string>('population') //population,year
+  const [sortYearOrder,setYearOrder] = useState<boolean>(true)
+  const [sortPopulationOrder,setPopulationOrder] = useState<boolean>(true)
   const [searchTableData, setSearchTableData] = useState<INationPopulation[]>([]);
   useEffect(()=>{
 setSearchTableData(nationPopulationList)
@@ -117,7 +98,7 @@ return(
 <TableContainer component={Paper} >
 <div className="border border-grey-400 p-2 mt-4 ml-9 mr-9 pr-5 mb-4">
       <h1 className="text-center font-bold text-lg text-[#191970]">Annual Population Statistics</h1>
-      <SearchAreaContainer marginRight>
+      <div className="h-[24px] mr-[22px] gap-[10px]">
               <CustomSearchField
                 placeholder="Search for population or year"
                 variant="outlined"
@@ -129,7 +110,6 @@ return(
                       (each: INationPopulation) =>
                         each.Population.toString().includes(e.target.value.trim()) || each.Year.includes(e.target.value.trim())) 
                     )
-                
                 }}
                 autoFocus={true}
                 InputLabelProps={{ shrink: false }}
@@ -141,7 +121,8 @@ return(
                   ),
                   endAdornment: (
                     <InputAdornment position="start">
-                      <CloseIcon
+                      <Image
+                        className="cursor-pointer w-[12px] h-[12px] "
                         onClick={handleSearchWindow}
                         src={CrossIcon}
                         alt={"close icon"}
@@ -151,7 +132,7 @@ return(
                   ),
                 }}
               />
-            </SearchAreaContainer>
+            </div>
        <div className="table-container mt-[8px]">
       <Table sx={{ minWidth: 700 }} aria-label="customized table" className="border border-grey-400 p-2 mt-4 ml-[6px] mb-4">
         <TableHead className="sticky top-0 bg-[#191970]">
@@ -221,7 +202,6 @@ return(
             </TableCell>
           </TableRow>
         )}
-         
         </TableBody>
       </Table>
       </div>
