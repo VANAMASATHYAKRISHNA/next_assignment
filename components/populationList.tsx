@@ -1,35 +1,16 @@
 import { INationPopulation } from "@/models/nationPopulation"
 import React, {  useEffect, useState } from "react"
-import { styled } from '@mui/material/styles';
 import Table from '@mui/material/Table';
-import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import { SortDescIcon } from "./SortDescIcon";
-import { NoSortIcon } from "./NoSortIcon";
-import { SortAscIcon } from "./SortAscIcon";
 import NoDataComponent from "./table/noDataComponent";
 import TableBodyComponent from "./table/tableBody";
 import ReusableSearchField from "./customSearch";
+import CustomTableHeader from "./table/customTableHeader";
 interface IProps{
     nationPopulationList:INationPopulation[]
 }
-const StyledTableCell = styled(TableCell)(({ theme }) => ({
-    [`&.${tableCellClasses.head}`]: {
-      backgroundColor: '#191970',
-      color: theme.palette.common.white,
-      fontWeight: 'bold',
-      fontSize: 16,
-      font:'Open Sans' 
-    },
-    [`&.${tableCellClasses.body}`]: {
-      fontSize: 14,
-      font:'Open Sans'
-    },
-  }));
-  const PopulationList:React.FC<IProps> = ({nationPopulationList}) =>{
+const PopulationList:React.FC<IProps> = ({nationPopulationList}) =>{
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [sortType,setSortType] = useState<string>('population') //population,year
   const [sortYearOrder,setYearOrder] = useState<boolean>(true)
@@ -96,55 +77,19 @@ return(
         setSearchTableData={setSearchTableData}
         handleSearchWindow={handleSearchWindow}
       />
-            </div>
+      </div>
        <div className="table-container mt-[8px]">
       <Table sx={{ minWidth: 700 }} aria-label="customized table" className="border border-grey-400 p-2 mt-4 ml-[6px] mb-4">
-        <TableHead className="sticky top-0 bg-[#191970]">
-          <TableRow>
-            <StyledTableCell onClick={()=>{
-          if(sortType === 'population')
-            {
-              setSortType('year')
-              setYearOrder(true)
-            }
-              sortByYear()
-          }}> <div  className="flex items-center">
-            <p>Year</p>
-            <div className="ml-[4px]">
-              {sortType === 'year'?<div>
-              {
-              sortYearOrder ? <SortAscIcon/> : <SortDescIcon />
-              }
-              </div> :<NoSortIcon/>}
-            
-            </div>
-          </div> </StyledTableCell>
-          <StyledTableCell onClick={()=>{
-          if(sortType === 'year')
-            {
-              setSortType('population')
-              setPopulationOrder(true)
-            }
-              sortByPopulation()
-          }} >
-            <div  className="flex items-center">
-            <p> Population </p>
-            <div className="ml-[4px]">
-              {sortType === 'population' ? <div>
-              {
-              sortPopulationOrder ? <SortAscIcon/> : <SortDescIcon />
-              }
-              </div> :<NoSortIcon/>}
-            
-            </div>
-          </div>
-          </StyledTableCell>
-          <StyledTableCell >Nation</StyledTableCell>
-            <StyledTableCell >Id Year</StyledTableCell>
-            <StyledTableCell >Slug Nation</StyledTableCell>
-            <StyledTableCell >Id Nation On</StyledTableCell>
-          </TableRow>
-        </TableHead>
+      <CustomTableHeader
+        sortType={sortType}
+        sortYearOrder={sortYearOrder}
+        sortPopulationOrder={sortPopulationOrder}
+        setSortType={setSortType}
+        setYearOrder={setYearOrder}
+        setPopulationOrder={setPopulationOrder}
+        sortByYear={sortByYear}
+        sortByPopulation={sortByPopulation}
+      />
         <TableBodyComponent
           data={searchTableData}
           keys={columnOrder}
