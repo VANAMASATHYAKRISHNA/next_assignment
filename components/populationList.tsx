@@ -15,6 +15,8 @@ import { TextField, InputAdornment } from "@mui/material";
 import SearchBoxIcon from "@/public/Icons/search.svg";
 import CrossIcon from "@/public/Icons/crossIcon.svg";
 import Image from "next/image";
+import NoDataComponent from "./table/noDataComponent";
+import TableBodyComponent from "./table/tableBody";
 interface IProps{
     nationPopulationList:INationPopulation[]
 }
@@ -93,6 +95,7 @@ setSearchTableData(nationPopulationList)
     setSearchTableData(nationPopulationList);
      setSearchTerm("");
   };
+  const columnOrder: string[] = ["Year", "Population", "Nation", "ID Year", "Slug Nation", "ID Nation"];
 return(
 <React.Fragment>
 <TableContainer component={Paper} >
@@ -181,28 +184,11 @@ return(
             <StyledTableCell >Id Nation On</StyledTableCell>
           </TableRow>
         </TableHead>
-        <TableBody className="table-body">
-        {searchTableData.length > 0 ? (
-          searchTableData.map((nationPopulationData) => (
-            <TableRow key={nationPopulationData.Year}>
-              <TableCell component="th" scope="row">
-                {nationPopulationData.Year}
-              </TableCell>
-              <TableCell>{nationPopulationData.Population}</TableCell>
-              <TableCell>{nationPopulationData.Nation}</TableCell>
-              <TableCell>{nationPopulationData["ID Year"]}</TableCell>
-              <TableCell>{nationPopulationData["Slug Nation"]}</TableCell>
-              <TableCell>{nationPopulationData["ID Nation"]}</TableCell>
-            </TableRow>
-          ))
-        ) : (
-          <TableRow>
-            <TableCell colSpan={6} align="center">
-              No data available
-            </TableCell>
-          </TableRow>
-        )}
-        </TableBody>
+        <TableBodyComponent
+          data={searchTableData}
+          keys={columnOrder}
+          noDataComponent={<NoDataComponent />}
+        />
       </Table>
       </div>
       </div>
