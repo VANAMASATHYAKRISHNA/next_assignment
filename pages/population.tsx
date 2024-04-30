@@ -20,7 +20,6 @@ export const getStaticProps: GetStaticProps = async () => {
             },
         };
     } catch (error) {
-        console.error('Error fetching data:', error);
         return {
             props: {
                 error: 'Failed to fetch data',
